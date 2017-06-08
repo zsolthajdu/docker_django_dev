@@ -1,0 +1,9 @@
+
+django==1.11
+djangorestframework
+coreapi
+beautifulsoup4
+pymysql
+mysqlclient
+ptvsd
+

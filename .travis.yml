@@ -1,0 +1,23 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+script:
+# Build image
+  - docker build -t  algoretum/django_dev .
+# Test image
+#  - docker run algoretum/django python3 --version
+
+# Push image
+  - >
+    if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" ;
+    TAG=$(grep "ENV DJANGO_VER" Dockerfile | awk '{print $3}') ;
+    docker tag algoretum/django_dev algoretum/django_dev:$TAG ;
+    docker push algoretum/django_dev:$TAG ;
+    docker push algoretum/django_dev ;
+    fi
+
