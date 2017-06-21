@@ -14,6 +14,7 @@ ENV APP_PATH /usr/src/app
 
 # Main Django dir under APP_PATH, that stores wsgi.py, settings.py, etc.
 ENV SITE_DIR mysite
+RUN export DEBIAN_FRONTEND=noninteractive
 
 # Update the sources list
 RUN apt-get update
@@ -29,7 +30,6 @@ RUN apt-get install -y python3-pip python3-lxml mysql-server phpmyadmin vim
 #RUN pip install --upgrade pip
 
 #install MySQL in noninteractive way
-RUN export DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get install -qy python-dev python3-dev
 RUN apt-get install -qy libmysqlclient-dev
