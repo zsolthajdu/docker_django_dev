@@ -24,7 +24,7 @@ RUN apt-get install -y aptitude apt-utils apache2  libapache2-mod-wsgi-py3
 # Install Python and Basic Python Tools
 RUN apt-get install -y python3 wget
 
-RUN apt-get install -y python3-pip python3-lxml
+RUN apt-get install -y python3-pip python3-lxml mysql-server phpmyadmin vim
 
 #RUN pip install --upgrade pip
 
@@ -44,20 +44,6 @@ RUN chmod a+x /start.sh
 #expose the port
 EXPOSE 80
 
-# Configure apache to run django app under /usr/src/app
-RUN echo "WSGIScriptAlias / /usr/src/app/THE_SITE_DIR/wsgi.py" >> /etc/apache2/apache2.conf && \
-echo "WSGIPythonPath /usr/src/app/" >> /etc/apache2/apache2.conf &&  \
-echo "Alias /static/ /usr/src/app/static/" >> /etc/apache2/apache2.conf &&  \
-echo "<Directory /usr/src/app/>" >> /etc/apache2/apache2.conf &&  \
-echo " <Files wsgi.py>" >> /etc/apache2/apache2.conf &&  \
-echo "  Order deny,allow" >> /etc/apache2/apache2.conf &&  \
-echo "  Require all granted" >> /etc/apache2/apache2.conf && \
-echo "  Satisfy Any" >> /etc/apache2/apache2.conf && \
-echo " </Files>" >> /etc/apache2/apache2.conf && \
-echo "</Directory>" >> /etc/apache2/apache2.conf && \
-echo "<Directory /usr/src/app/static/>" >> /etc/apache2/apache2.conf &&  \
-echo "  Require all granted" >> /etc/apache2/apache2.conf && \
-echo "</Directory>" >> /etc/apache2/apache2.conf
 
 ENTRYPOINT ["/start.sh"]
 
